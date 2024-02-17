@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8" />
+		<title> Novel </title>
+		<link rel = "stylesheet" type = "text/css" href = "style.css" />
+		<link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+		<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+	</head>
+	<body>
+		<div id = "text"><div>
+		<div class="container center">
+			<button id = "last" pys-onClick = "event_last"> &lt;-- [ last - page ] </button>
+			<p>|----------------|<p>
+			<button id = "nect" pys-onClick = "event_next"> [ next - page ] --&gt; </button>
+		</div>
+
+		<py-script>
+			target, n = '''\
+			\
+			''', ()
+
+			now_page = 0
+
+			page, value = [], ''
+			for i, j in enumerate(target.split('<!-- \\n -->')):
+				value += j
+				if i == n:
+					page.append(value)
+					value = ''
+			else:
+				if value != '':
+					page.append(value)
+
+
+			def text_set(text):
+				Element("text").element.innerText = text
+
+
+			def update():
+				text_set(page[now_page])
+
+
+			update()
+
+
+			def event_last():
+				global now_page
+				now_page -= 1
+				update()
+
+
+			def event_next():
+				global now_page
+				now_page += 1
+				update()
+
+		</py-script>
+	</body>
+</html>
